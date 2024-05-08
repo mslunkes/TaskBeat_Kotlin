@@ -62,9 +62,6 @@ class MainActivity : AppCompatActivity() {
         getTasksFromDataBase(taskAdapter)
     }
 
-
-
-
     private fun getCategoriesFromDataBase(adapter: CategoryListAdapter) {
         GlobalScope.launch(Dispatchers.IO) {
             val categoriesFromDb = categoryDao.getAll()
@@ -73,7 +70,14 @@ class MainActivity : AppCompatActivity() {
                     name = it.name,
                     isSelected = it.isSelected
                 )
-            }
+            }.toMutableList()
+
+            categoriesUiData.add(
+                CategoryUiData(
+                    name = "+",
+                    isSelected = false
+                )
+            )
             adapter.submitList(categoriesUiData)
         }
     }
